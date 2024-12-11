@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #121212;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  a.goBackButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    font-size: 1rem;
+    color: #b3b3b3;
+    background: linear-gradient(145deg, #1a1a1a, #292929);
+    padding: 12px 25px;
+    border-radius: 50px;
+    box-shadow: 4px 4px 8px #0d0d0d, -4px -4px 8px #383838;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  a.goBackButton:hover {
+    background: linear-gradient(145deg, #292929, #1a1a1a);
+    box-shadow: inset 4px 4px 8px #0d0d0d, inset -4px -4px 8px #383838;
+    color: #ffffff;
+  }
+  
+  .userForm {
+    background: #1e1e1e;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px #0d0d0d, -5px -5px 10px #383838;
+    max-width: 450px;
+    width: 100%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label {
+    font-size: 1rem;
+    color: #e0e0e0;
+    margin-bottom: 5px;
+    align-self: flex-start;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    background: #252525;
+    box-shadow: inset 3px 3px 5px #0d0d0d, inset -3px -3px 5px #383838;
+    color: #fff;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    box-shadow: inset 2px 2px 3px #0d0d0d, inset -2px -2px 3px #383838;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(145deg, #2d2d2d, #3a3a3a);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 3px 3px 5px #0d0d0d, -3px -3px 5px #383838;
+    cursor: pointer;
+    transition: all 0.03s ease-in-out;
+  }
+  
+  .submitButton:hover {
+    background: linear-gradient(145deg, #3a3a3a, #2d2d2d);
+    box-shadow: inset 3px 3px 5px #0d0d0d, inset -3px -3px 5px #383838;
+  }
+  
+  @media (max-width: 768px) {
+    .userForm {
+      padding: 30px;
+    }
+  
+    input, select, textarea {
+      font-size: 0.9rem;
+    }
+  
+    label {
+      font-size: 0.9rem;
+    }
+  
+    .submitButton {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    a.goBackButton {
+      font-size: 0.8rem;
+      padding: 8px 15px;
+    }
+  
+    .userForm {
+      padding: 20px;
+    }
+  
+    input, select, textarea {
+      font-size: 0.8rem;
+    }
+  
+    label {
+      font-size: 0.8rem;
+    }
+  
+    .submitButton {
+      font-size: 0.8rem;
+    }
+  }
+  
