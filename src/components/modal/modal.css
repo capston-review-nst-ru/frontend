@@ -4,9 +4,8 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    border: 2px solid red;
     z-index: 2000;
-    backdrop-filter: blur(7px);
+    backdrop-filter: blur(10px);
 }
 
 .modalContentContainer{
@@ -14,13 +13,32 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 80vh;
+    height: fit-content;
     width: 50vw;
-    border: 2px solid blue;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 1rem 2rem;
+    color: white;
 }
+
+.closeButton {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+  
+  .closeButton:hover {
+    color: #ff4d4d; /* A light red hover color */
+    transform: scale(1.1); /* Slightly increase size when hovered */
+  }
+  
+  .closeButton:focus {
+    outline: none; /* Removes the default focus outline */
+  }
