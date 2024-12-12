@@ -10,14 +10,12 @@ import Modal from '../../components/modal/Modal';
 
 const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(''); // Tracks which component to render in Modal
-  const [content, setContent] = useState('register');
+  const [modalContent, setModalContent] = useState('');
   const [countdown, setCountdown] = useState(''); // State for the countdown timer
 
   const openModal = (content) => {
-    setModalContent(content); // Set the specific content to render
-    setContent(modalContent);
-    setIsModalOpen(true); // Open the modal
+    setModalContent(content);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
@@ -53,7 +51,11 @@ const HomePage = () => {
   return (
     <>
       {/* Modal Component */}
-      {isModalOpen && <Modal content={modalContent} onClose={closeModal} setContent={setContent} />}
+      {isModalOpen && <Modal 
+        content={modalContent} 
+        onClose={closeModal} 
+        setContent={setModalContent} 
+      />}
 
       <div className="homeMainContainer">
         <div className="circle"></div>
