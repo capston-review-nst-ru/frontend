@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+
 .homeMainContainer{
     width: 100vw;
     height: 100vh;
@@ -9,27 +12,26 @@
     width: 250px;
     height: 250px;
     border-radius: 50%;
-    border: 2px solid green;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) ;
     background-color: green;
+    background-image: url('../../images/capstone_globe.gif');
+    background-position: center;
     z-index: 1000;
-    border: 20px solid red;
+    border: 20px solid #03061C;
 
 }
 
 .homePageContentContainer {
     position: relative;
     height: 100vh;
-    border: 2px solid red;
     padding: 0 2rem;
-    width: 95%;
+    width: 90%;
     margin: 0 auto;
 }
 
 .cardContainer{
-    border: 2px solid red;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -38,7 +40,6 @@
 
 .topRow, .bottomRow{
     height: 50%;
-    border: 2px solid green;
     display: flex;
 }
 
@@ -46,23 +47,33 @@
     height: 100%;
     width: 25%;
     border-radius: 10px;
-    border: 20px solid red;
-    background-color: blue;
+    border: 15px solid #03061C;
+    padding: 1rem 2rem;
+    color: white;
 }
 
 .secondCard{
     height: 100%;
     width: 50%;
-    border-radius: 10px;
-    border: 20px solid red;
-    background-color: blue;
+    border-radius: 40px;
+    border: 15px solid #03061C;
+}
+
+.secondCardContainer{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 2rem;
 }
 
 .thirdCardContainer{
     height: 100%;
     width: 25%;
     border-radius: 10px;
-    /* border: 20px solid red; */
     display: flex;
     flex-direction: column;
 }
@@ -71,14 +82,200 @@
     height: 40%;
     width: 100%;
     border-radius: 10px;
-    border: 20px solid red;
-    background-color: blue;
+    border: 15px solid #03061C;
 }
 
 .thirdCardContainerBottomCard{
     height: 60%;
     width: 100%;
-    border-radius: 10px;
-    border: 20px solid red;
-    background-color: blue;
+    border: 15px solid #03061C;
+}
+
+.topRow .secondCard{
+    background-image: url('../../images/bg_timer_card_rectangle.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.topRow .firstCard{
+    background-image: url('../../images/card_left1.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 30px !important;
+}
+
+.topRow .firstCard p{
+    margin: 1rem 0;
+    font-weight: 600;
+    font-size: 20px;
+
+}
+
+.topRow .thirdCardContainer .thirdCardContainerTopCard{
+    background-image: url('../../images/card_right1.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 30px !important;
+}
+
+.topRow .thirdCardContainer .thirdCardContainerBottomCard{
+    background-image: url('../../images/card_right2.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 30px !important;
+}
+
+.bottomRow .thirdCardContainer .thirdCardContainerBottomCard{
+    background-image: url('../../images/card_left2.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 30px !important;
+}
+
+.bottomRow .thirdCardContainer .thirdCardContainerTopCard{
+    background-image: url('../../images/card_left3.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 30px !important;
+}
+
+.bottomRow .firstCard{
+    background-image: url('../../images/card_left_center.svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 30px !important;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.bottomRow .firstCard .img{
+    height: 70%;
+
+}
+.bottomRow .firstCard .img img{
+    height: 100%;
+
+}
+.bottomRow .firstCard .text{
+    height: 30%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.bottomRow .firstCard .text p{
+    font-size: 20;
+    font-weight: 700;
+}
+
+.bottomRow .firstCard .text span{
+    font-size: 18;
+    font-weight: 400;
+    color: #B2A1FD;
+    margin-top: .5rem;
+}
+
+
+
+.bottomRow .secondCard{
+    background-image: url('../../images/card_right_center(bottom).svg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 30px !important;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    padding-left: 0;
+    
+}
+
+.bottomRow .secondCard .upper{
+    height: 50%;
+    display: flex;
+}
+
+.bottomRow .secondCard .upper img{
+    width: 50%;
+    height:70%;
+    position: relative;
+    top: -25px;
+    
+}
+
+.bottomRow .secondCard .upper .text{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.bottomRow .secondCard .upper .text p{
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.bottomRow .secondCard .upper .text span{
+    font-size: 18px;
+    font-weight: 400;
+    color: #B2A1FD;
+    margin-top: .5rem;
+}
+
+.bottomRow .secondCard .lower{
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
+.thirdCardContainerTopCard, .thirdCardContainerBottomCard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+.logo-name{
+    display: flex;
+}
+
+.secondCardContainer p{
+    font-weight: 700;
+    font-size: 25px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, .7);
+}
+
+.secondCardContainer .logo-name p{
+    margin-left: .5rem;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.secondCardContainer h2{
+    font-size: 62px;
+    font-weight: 600;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, .7);
+
+}
+
+.thirdCardContainerTopCard h1, .thirdCardContainerBottomCard h1{
+    font-size: 62px;
+    font-weight: 600;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, .7);
+    color: #a182f6;
+}
+.thirdCardContainerTopCard p, .thirdCardContainerBottomCard p{
+    font-size: 20px;
+    font-weight: 400;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, .7);
+}
+
+.bottomRow .thirdCardContainerBottomCard h1, 
+.bottomRow .thirdCardContainerTopCard h1 {
+    color: #e9766f;
 }
