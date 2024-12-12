@@ -10,7 +10,7 @@ import Modal from '../../components/modal/Modal'
 const HomePage = () => {
   return (
     <>
-   {/* <Modal /> */}
+   <Modal />
         <div className="homeMainContainer">
           <div className="circle"></div>
             <div className="homePageContentContainer">
