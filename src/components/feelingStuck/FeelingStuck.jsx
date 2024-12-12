@@ -2,6 +2,7 @@ import React from 'react';
 import './feelingStuck.css';
 
 const FeelingStuck = () => {
+  const mentors = ["Vishal Sharma", "Rishabh Sharma", "Rashmi Kumari", "Jai Gupta", "Swati Priya", "Shivam Gupta", "Narendra kumar","Aryan Singhal","Rahul kumar", "Nischal Gupta", "Ajay", "Kartik Katiyar", "Neeraj Rawat", "Uttam Kumar Mahato",  ]
   return (
    <>
     <p className="modalHeader">Feeling Stuck</p>
@@ -10,17 +11,15 @@ const FeelingStuck = () => {
     <form action="" className="modalFormContainer">
         <label htmlFor="modalOptionContainer" className="modalOptionLabel">Mentor</label>
         <select name="modelOptions" id="modelOptionContainer" className="modelOptions" required>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
+        {
+                mentors.map((ele, idx)=>{
+                    return(
+                        <>
+                        <option key={idx} value={ele} className="modalOption">{ele}</option>
+                        </>
+                    )
+                })
+            }
         </select>
 
         <label htmlFor="modalQueryContainer" className="modalQueryLabel">Ask your queries:</label>

@@ -13,7 +13,7 @@ const Modal = ({ content, onClose, setContent }) => {
       case 'register':
         return <GetStarted switchToLogin={() => setContent('login')} />;
       case 'login':
-        return <Login switchToRegister={() => setContent('register')} />;
+        return <Login switchToRegister={() => setContent('register')} onClose={onClose} />;
       case 'submitProject':
         return <SubmitProject />;
       case 'askQuery':

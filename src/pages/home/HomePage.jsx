@@ -7,11 +7,14 @@ import Frame from '../../images/Frame.svg';
 import Group from '../../images/Group.svg';
 import github from '../../images/github.svg';
 import Modal from '../../components/modal/Modal';
+import axios from 'axios';
 
 const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
-  const [countdown, setCountdown] = useState(''); // State for the countdown timer
+  const [countdown, setCountdown] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
 
   const openModal = (content) => {
     setModalContent(content);
@@ -23,27 +26,56 @@ const HomePage = () => {
     setModalContent('');
   };
 
-  useEffect(() => {
-    const targetDate = new Date('2024-12-20T23:59:59'); // Target date and time (20th Dec 2024)
+  const fetchUserInfo = async () => {
+    const token = localStorage.getItem('token'); // Get token from localStorage
+    if (token) {
+      try {
+        const response = await axios.get('https://a209-115-244-141-202.ngrok-free.app/User/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserInfo(response.data); // Set user info from the API
+        setIsLoggedIn(true); // User is logged in
+      } catch (error) {
+        console.error('Error fetching user info', error);
+        setIsLoggedIn(false);
+      }
+    }
+  };
 
+  useEffect(() => {
+    fetchUserInfo(); // Check if the user is logged in when the page loads
+  }, []);
+
+  useEffect(() => {
+    const targetDate = new Date('2024-12-13T18:00:00'); // Target date and time (13th Dec 2024, 6:00 PM)
+  
     const updateCountdown = () => {
       const now = new Date();
       const timeLeft = targetDate - now;
-
+  
       if (timeLeft <= 0) {
         setCountdown('Expired'); // If the countdown reaches 0
         return;
       }
-
+  
       const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      // Update the countdown state
-      setCountdown(`${days} Days ${hours} hrs`);
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+  
+      // Ensure each unit has a leading zero if it's a single digit
+      const formattedHours = hours.toString().padStart(2, '0');
+      const formattedMinutes = minutes.toString().padStart(2, '0');
+      const formattedSeconds = seconds.toString().padStart(2, '0');
+  
+      setCountdown(`${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`);
     };
-
+  
     // Update the countdown every second
     const interval = setInterval(updateCountdown, 1000);
-
+  
     // Cleanup the interval on component unmount
     return () => clearInterval(interval);
   }, []);
@@ -55,6 +87,8 @@ const HomePage = () => {
         content={modalContent} 
         onClose={closeModal} 
         setContent={setModalContent} 
+        setIsLoggedIn={setIsLoggedIn} 
+        setUserInfo={setUserInfo} 
       />}
 
       <div className="homeMainContainer">
@@ -64,10 +98,28 @@ const HomePage = () => {
             <div className="topRow">
               <div className="firstCard">
                 <img src={logo} alt="" />
-                <p onClick={() => openModal('register')}>Register</p>
-                <p onClick={() => openModal('login')}>Login</p>
-                <p onClick={() => openModal('submitProject')}>Submit Project</p>
-                <p onClick={() => openModal('askQuery')}>Ask Queries</p>
+                {!isLoggedIn ? (
+                  <>
+                    <p onClick={() => openModal('register')}>Register</p>
+                    <p onClick={() => openModal('login')}>Login</p>
+                  </>
+                ) : (
+                  <p>Hello, {userInfo?.name}</p> // Display user's name after login
+                )}
+                <p 
+                  onClick={() => openModal('submitProject')} 
+                  disabled={!isLoggedIn} 
+                  className={isLoggedIn ? '' : 'disabled'}
+                >
+                  Submit Project
+                </p>
+                <p 
+                  onClick={() => openModal('askQuery')} 
+                  disabled={!isLoggedIn} 
+                  className={isLoggedIn ? '' : 'disabled'}
+                >
+                  Ask Queries
+                </p>
               </div>
               <div className="secondCard">
                 <div className="secondCardContainer">
@@ -76,7 +128,7 @@ const HomePage = () => {
                     <p>Capstone</p>
                   </div>
                   <p>Submit within</p>
-                  <h2>{countdown}</h2> {/* Countdown Timer */}
+                  <h2 className='countdown'>{countdown}</h2> {/* Countdown Timer */}
                 </div>
               </div>
               <div className="thirdCardContainer">

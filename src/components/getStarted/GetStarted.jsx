@@ -1,46 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './GetStarted.css';
+import axios from 'axios';
 
-const GetStarted = ({ switchToLogin }) => {
+const GetStarted = ({ switchToLogin, switchToOtp,formData,setFormData }) => {
+  const mentors = ["Vishal Sharma", "Rishabh Sharma", "Rashmi Kumari", "Jai Gupta", "Swati Priya", "Shivam Gupta", "Narendra Kumar", "Aryan Singhal", "Rahul Kumar", "Nischal Gupta", "Ajay", "Kartik Katiyar", "Neeraj Rawat", "Uttam Kumar Mahato"];
+  
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true); // Show loader
+    try {
+      // Send OTP request
+      const response = await axios.post('https://a209-115-244-141-202.ngrok-free.app/sendMail/otp', { to: formData.email });
+      if (response.status === 200) {
+        console.log('OTP sent successfully');
+        switchToOtp(); // Redirect to OTP verification modal
+      }
+    } catch (error) {
+      console.error('Error sending OTP:', error);
+    } finally {
+      setLoading(false); // Hide loader
+    }
+  };
+
   return (
-   <>
-    <p className="modalHeader">Get Started</p>
-    <p className="modalSubHeader">Already have an account? 
-    <a href="#" onClick={(e) => { e.preventDefault(); switchToLogin(); }} className="modalSubHeaderLink">
+    <>
+      <p className="modalHeader">Get Started</p>
+      <p className="modalSubHeader">
+        Already have an account? 
+        <a href="#" onClick={(e) => { e.preventDefault(); switchToLogin(); }} className="modalSubHeaderLink">
           Login
         </a>
-         </p>
-    <form action="" className="modalFormContainer">
-        <label htmlFor="modalNameContainer" className="modalNameLabel">Name</label>
-        <input type="text" id="modalNameContainer" className="modalNameContainer" required />
+      </p>
+      <form onSubmit={handleSubmit} className="modalFormContainer">
+        <label htmlFor="name" className="modalNameLabel">Name</label>
+        <input type="text" id="name" className="modalNameContainer" value={formData.name} onChange={handleChange} required />
 
-        <label htmlFor="modalEmailContainer" className="modalEmailLabel">Email</label>
-        <input type="email" id="modalEmailContainer" className="modalEmailContainer" required />
+        <label htmlFor="email" className="modalEmailLabel">Email</label>
+        <input type="email" id="email" className="modalEmailContainer" value={formData.email} onChange={handleChange} required />
 
-        <label htmlFor="modalPasswordContainer" className="modalPasswordLabel">Password</label>
-        <input type="password" id="modalPasswordContainer"  className="modalPasswordContainer" required />
+        <label htmlFor="password" className="modalPasswordLabel">Password</label>
+        <input type="password" id="password" className="modalPasswordContainer" value={formData.password} onChange={handleChange} required />
 
-        <label htmlFor="modalOptionContainer" className="modalOptionLabel">Mentor</label>
-        <select name="modelOptions" id="modelOptionContainer" className="modelOptions" required>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
-            <option value="Mentor" className="modalOption">Mentor</option>
+        <label htmlFor="mentor" className="modalOptionLabel">Mentor</label>
+        <select id="mentor" className="modalOptions" value={formData.mentor} onChange={handleChange} required>
+          {mentors.map((mentor, idx) => (
+            <option key={idx} value={mentor} className="modalOption">{mentor}</option>
+          ))}
         </select>
 
-        <label htmlFor="modalLinkContainer" className="modalLinkLabel">Figma Link</label>
-        <input type="url" name="modalLinkContainer" id="modalLinkContainer" className="modalLinkContainer" required />
-        <input type="submit" value="Send OTP" className="modalSubmitButton" />
-    </form>
-   </>
-  )
-}
+        <label htmlFor="figmaLink" className="modalLinkLabel">Figma Link</label>
+        <input type="url" id="figmaLink" className="modalLinkContainer" value={formData.figmaLink} onChange={handleChange} required />
+
+        <button type="submit" className="modalSubmitButton" disabled={loading}>
+          {loading ? 'Sending...' : 'Send OTP'}
+        </button>
+      </form>
+    </>
+  );
+};
 
 export default GetStarted;
