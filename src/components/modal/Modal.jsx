@@ -35,7 +35,7 @@ const Modal = ({ content, onClose, setContent, setIsLoggedIn, setUserInfo, updat
       case 'askQuery':
         return <FeelingStuck />;
       case 'switchOTP':
-        return <OtpVerification onClose={onClose} formData={formdata} />;
+        return <OtpVerification onClose={onClose} formData={formdata} updateLoginState={updateLoginState} />;
 
       default:
         return null;

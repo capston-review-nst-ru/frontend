@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './otpVerification.css';
 import axios from 'axios';
 
-const OtpVerification = ({ formData, setFormData, onClose }) => {
+const OtpVerification = ({ formData, setFormData, onClose, updateLoginState }) => {
     const [otp, setOtp] = useState(['', '', '', '']); // Use an array to hold the OTP characters
     const [error, setError] = useState(''); // State to handle error messages
 
@@ -55,8 +55,23 @@ const OtpVerification = ({ formData, setFormData, onClose }) => {
             if (response.status === 200) {
                 console.log('User registered successfully');
                 localStorage.setItem("token", response.data.token); // Store token
+                const token = localStorage.getItem("token")
+                if (token) {
+                    try {
+                        const response = await axios.get('https://backend-newton-capstone-eval.onrender.com/User/me', {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        });
+                        const userName = response.data.user.name; // Get the user's name
+                        // setUserInfo(response.data.user.name); // Set user info from the API
+                        // setIsLoggedIn(true); // User is logged in
+                        updateLoginState(userName);
+                    } catch (error) {
+                        console.error('Error fetching user info', error);
+                    }
+                }
                 onClose(); // Redirect to home page
-                
             }
         } catch (error) {
             console.error('Error verifying OTP:', error);
