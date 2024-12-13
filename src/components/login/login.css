@@ -13,6 +13,13 @@
 .modalSubHeader a{
     color: #A589F1;
     padding-left: 0.5em;
+    text-decoration: underline;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.modalSubHeader a:hover {
+    color: #FFD700;
+    transform: scale(1.05);
 }
 
 .modalFormContainer{
@@ -44,4 +51,3 @@
     padding: 15px 10px;
     border-radius: 10px;;
 }
-
