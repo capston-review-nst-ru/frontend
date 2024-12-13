@@ -16,7 +16,7 @@ const GetStarted = ({ switchToLogin, switchToOtp,formData,setFormData }) => {
     setLoading(true); // Show loader
     try {
       // Send OTP request
-      const response = await axios.post('https://a209-115-244-141-202.ngrok-free.app/sendMail/otp', { to: formData.email });
+      const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/sendMail/otp', { to: formData.email });
       if (response.status === 200) {
         console.log('OTP sent successfully');
         switchToOtp(); // Redirect to OTP verification modal
@@ -39,23 +39,23 @@ const GetStarted = ({ switchToLogin, switchToOtp,formData,setFormData }) => {
       </p>
       <form onSubmit={handleSubmit} className="modalFormContainer">
         <label htmlFor="name" className="modalNameLabel">Name</label>
-        <input type="text" id="name" className="modalNameContainer" value={formData.name} onChange={handleChange} required />
+        <input type="text" id="name" className="modalNameContainer" value={formData?.name||""} onChange={handleChange} required />
 
         <label htmlFor="email" className="modalEmailLabel">Email</label>
-        <input type="email" id="email" className="modalEmailContainer" value={formData.email} onChange={handleChange} required />
+        <input type="email" id="email" className="modalEmailContainer" value={formData?.email||""} onChange={handleChange} required />
 
         <label htmlFor="password" className="modalPasswordLabel">Password</label>
-        <input type="password" id="password" className="modalPasswordContainer" value={formData.password} onChange={handleChange} required />
+        <input type="password" id="password" className="modalPasswordContainer" value={formData?.password||""} onChange={handleChange} required />
 
         <label htmlFor="mentor" className="modalOptionLabel">Mentor</label>
-        <select id="mentor" className="modalOptions" value={formData.mentor} onChange={handleChange} required>
+        <select id="mentor" className="modalOptions" value={formData?.mentor} onChange={handleChange} required>
           {mentors.map((mentor, idx) => (
             <option key={idx} value={mentor} className="modalOption">{mentor}</option>
           ))}
         </select>
 
         <label htmlFor="figmaLink" className="modalLinkLabel">Figma Link</label>
-        <input type="url" id="figmaLink" className="modalLinkContainer" value={formData.figmaLink} onChange={handleChange} required />
+        <input type="url" id="figmaLink" className="modalLinkContainer" value={formData?.figmaLink} onChange={handleChange} required />
 
         <button type="submit" className="modalSubmitButton" disabled={loading}>
           {loading ? 'Sending...' : 'Send OTP'}

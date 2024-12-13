@@ -17,8 +17,8 @@ const Login = ({ switchToRegister, onClose }) => {
     setError(''); // Reset error state
 
     try {
-      const response = await axios.post('https://a209-115-244-141-202.ngrok-free.app/User/login', {
-        usernameOrEmail: email,
+      const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/User/login', {
+        email: email,
         password: password,
       });
 

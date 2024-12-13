@@ -52,6 +52,13 @@
     color: white;
 }
 
+.disabled {
+    pointer-events: none; /* Prevent clicks */
+    opacity: 0.5; /* Make it appear faded */
+    cursor: not-allowed; /* Show a 'not-allowed' cursor */
+  }
+  
+
 .secondCard{
     height: 100%;
     width: 50%;

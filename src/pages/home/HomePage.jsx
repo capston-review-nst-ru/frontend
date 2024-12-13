@@ -50,32 +50,32 @@ const HomePage = () => {
 
   useEffect(() => {
     const targetDate = new Date('2024-12-13T18:00:00'); // Target date and time (13th Dec 2024, 6:00 PM)
-  
+
     const updateCountdown = () => {
       const now = new Date();
       const timeLeft = targetDate - now;
-  
+
       if (timeLeft <= 0) {
         setCountdown('Expired'); // If the countdown reaches 0
         return;
       }
-  
+
       const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
       const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-  
+
       // Ensure each unit has a leading zero if it's a single digit
       const formattedHours = hours.toString().padStart(2, '0');
       const formattedMinutes = minutes.toString().padStart(2, '0');
       const formattedSeconds = seconds.toString().padStart(2, '0');
-  
+
       setCountdown(`${formattedHours} : ${formattedMinutes} : ${formattedSeconds}`);
     };
-  
+
     // Update the countdown every second
     const interval = setInterval(updateCountdown, 1000);
-  
+
     // Cleanup the interval on component unmount
     return () => clearInterval(interval);
   }, []);
@@ -83,12 +83,12 @@ const HomePage = () => {
   return (
     <>
       {/* Modal Component */}
-      {isModalOpen && <Modal 
-        content={modalContent} 
-        onClose={closeModal} 
-        setContent={setModalContent} 
-        setIsLoggedIn={setIsLoggedIn} 
-        setUserInfo={setUserInfo} 
+      {isModalOpen && <Modal
+        content={modalContent}
+        onClose={closeModal}
+        setContent={setModalContent}
+        setIsLoggedIn={setIsLoggedIn}
+        setUserInfo={setUserInfo}
       />}
 
       <div className="homeMainContainer">
@@ -106,17 +106,15 @@ const HomePage = () => {
                 ) : (
                   <p>Hello, {userInfo?.name}</p> // Display user's name after login
                 )}
-                <p 
-                  onClick={() => openModal('submitProject')} 
-                  disabled={!isLoggedIn} 
-                  className={isLoggedIn ? '' : 'disabled'}
+                <p
+                  onClick={() => isLoggedIn && openModal('submitProject')}
+                  className={!isLoggedIn ? 'disabled' : ''}
                 >
                   Submit Project
                 </p>
-                <p 
-                  onClick={() => openModal('askQuery')} 
-                  disabled={!isLoggedIn} 
-                  className={isLoggedIn ? '' : 'disabled'}
+                <p
+                  onClick={() => isLoggedIn && openModal('askQuery')}
+                  className={!isLoggedIn ? 'disabled' : ''}
                 >
                   Ask Queries
                 </p>

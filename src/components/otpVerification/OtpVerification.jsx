@@ -49,11 +49,12 @@ const OtpVerification = ({ switchToHome, formData, setFormData }) => {
         try {
             // Post OTP verification and registration
             const response = await axios.post(
-                'https://a209-115-244-141-202.ngrok-free.app/User/register-otp',
+                'https://backend-newton-capstone-eval.onrender.com/User/register-otp',
                 { otp: Number(otpString), ...formData }
             );
             if (response.status === 200) {
                 console.log('User registered successfully');
+                localStorage.setItem("token", response.token)
                 switchToHome(); // Redirect to home page
             }
         } catch (error) {
