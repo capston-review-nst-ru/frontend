@@ -1,31 +1,59 @@
 import React, { useState } from "react";
 import "./submitProject.css";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const SubmitProject = () => {
-  const [formData, setFormData] = useState({
+  const [formDataInputs, setformDataInputs] = useState({
     githubUrl: "",
     hostedLink: "",
-    videoFile: null,
+    videoFile: "example.com",
     query: "",
   });
 
+  var handleVideoFileChange = async (e) => {
+    if (e.target.files[0]) {
+      var formData = new FormData();
+      formData.append("video", e.target.files[0]);
+      // console.log(e.target.files[0]);
+      // var loading = toast.loading("Uploading Video..");
+      var axres = await axios.post(
+        "https://40c5-115-244-141-202.ngrok-free.app/UploadFile/upload",
+        formData
+      );
+      // toast.update(loading, {
+      //   autoClose: 2000,
+      //   isLoading: false,
+      //   type: "success",
+      //   toastId: loading,
+      // });
+      console.log(axres.data);
+    }
+  };
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
+    setformDataInputs({
+      ...formDataInputs,
       [name]: name === "videoFile" ? files[0] : value,
     });
   };
-
+  var tosend = { responseSheet: formDataInputs };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    if (!localStorage.getItem("token")) {
+      alert("Please login first");
+    }
+    const response = await fetch(
+      "https://backend-newton-capstone-eval.onrender.com/Submission/submissions",
+      {
+        method: "POST",
+        body: JSON.stringify(tosend),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
     const data = await response.json();
     console.log(data);
   };
@@ -69,7 +97,8 @@ const SubmitProject = () => {
           name="videoFile"
           className="modalFileContainer"
           required
-          onChange={handleChange}
+          onChange={handleVideoFileChange}
+          accept="video/*"
         />
 
         <label htmlFor="modalQueryContainer" className="modalQueryLabel">
