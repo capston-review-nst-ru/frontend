@@ -1,37 +1,99 @@
-import React from 'react';
-import './feelingStuck.css';
+import React, { useState } from "react";
+import "./feelingStuck.css";
+import axios from "axios";
 
 const FeelingStuck = () => {
-  const mentors = ["Vishal Sharma", "Rishabh Sharma", "Rashmi Kumari", "Jai Gupta", "Swati Priya", "Shivam Gupta", "Narendra kumar","Aryan Singhal","Rahul kumar", "Nischal Gupta", "Ajay", "Kartik Katiyar", "Neeraj Rawat", "Uttam Kumar Mahato",  ]
-  return (
-   <>
-    <p className="modalHeader">Feeling Stuck</p>
-    <p className="modalSubHeader">Don't hesitate! Take help from your mentor
-         </p>
-    <form action="" className="modalFormContainer">
-        <label htmlFor="modalOptionContainer" className="modalOptionLabel">Mentor</label>
-        <select name="modelOptions" id="modelOptionContainer" className="modelOptions" required>
+  const [text, setText] = useState("");
+  const [fileLink, setFileLink] = useState("");
+
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleFileChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    console.log(selectedFile);
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("video", selectedFile);
+      var axres = await axios.post(
+        "https://backend-newton-capstone-eval.onrender.com/UploadFile/upload",
+        formData
+      );
+      var filelink = axres.data.videoLink;
+      setFileLink(filelink);
+      if (!localStorage.getItem("token")) {
+        alert("Please login first");
+        return;
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!fileLink) {
+      alert("Please upload a file!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://backend-newton-capstone-eval.onrender.com/AskQuery/queries",
         {
-                mentors.map((ele, idx)=>{
-                    return(
-                        <>
-                        <option key={idx} value={ele} className="modalOption">{ele}</option>
-                        </>
-                    )
-                })
-            }
-        </select>
+          query: { query: text, file: fileLink },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log("Query submitted successfully:", response.data);
+    } catch (error) {
+      console.error("Error submitting query:", error);
+    }
+  };
 
-        <label htmlFor="modalQueryContainer" className="modalQueryLabel">Ask your queries:</label>
-        <input type="text" id="modalQueryContainer" className="modalQueryContainer" required />
+  return (
+    <>
+      <p className="modalHeader">Feeling Stuck</p>
+      <p className="modalSubHeader">
+        Don't hesitate! Take help from your mentor
+      </p>
+      <form className="modalFormContainer" onSubmit={handleSubmit}>
+        <label htmlFor="modalQueryContainer" className="modalQueryLabel">
+          Ask your queries:
+        </label>
+        <input
+          type="text"
+          id="modalQueryContainer"
+          className="modalQueryContainer"
+          name="query"
+          required
+          onChange={handleTextChange}
+        />
 
-        <label htmlFor="modalFileContainer" className="modalFileLabel">Attach files:</label>
-        <input type="file" id="modalFileContainer" className="modalFileContainer" required />
+        <label htmlFor="modalFileContainer" className="modalFileLabel">
+          Attach files:
+        </label>
+        <input
+          type="file"
+          id="modalFileContainer"
+          className="modalFileContainer"
+          required
+          onChange={handleFileChange}
+        />
 
-        <input type="submit" value="Submit" className="modalSubmitButton" />
-    </form>
-   </>
-  )
-}
+        <input
+          type="submit"
+          value="Submit Query"
+          className="modalSubmitButton"
+        />
+      </form>
+    </>
+  );
+};
 
 export default FeelingStuck;

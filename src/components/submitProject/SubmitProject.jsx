@@ -4,10 +4,13 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const SubmitProject = () => {
+  const [isVideoUploaded, setIsVideoUploaded] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+
   const [formDataInputs, setformDataInputs] = useState({
     githubUrl: "",
     hostedLink: "",
-    videoFile: "example.com",
+    videoFile: "exampple.com",
     query: "",
   });
 
@@ -18,7 +21,7 @@ const SubmitProject = () => {
       // console.log(e.target.files[0]);
       // var loading = toast.loading("Uploading Video..");
       var axres = await axios.post(
-        "https://40c5-115-244-141-202.ngrok-free.app/UploadFile/upload",
+        "https://backend-newton-capstone-eval.onrender.com/UploadFile/upload",
         formData
       );
       // toast.update(loading, {
@@ -27,6 +30,13 @@ const SubmitProject = () => {
       //   type: "success",
       //   toastId: loading,
       // });
+      setformDataInputs((prev) => ({
+        ...prev,
+        videoFile: axres.data.videoLink,
+      }));
+      if (axres.data) {
+        setIsVideoUploaded(true);
+      }
       console.log(axres.data);
     }
   };
@@ -42,6 +52,7 @@ const SubmitProject = () => {
     e.preventDefault();
     if (!localStorage.getItem("token")) {
       alert("Please login first");
+      return;
     }
     const response = await fetch(
       "https://backend-newton-capstone-eval.onrender.com/Submission/submissions",
@@ -56,10 +67,18 @@ const SubmitProject = () => {
     );
     const data = await response.json();
     console.log(data);
+
+    if (response.ok) {
+      setSuccessMessage("Submitted successfully!");
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+    }
   };
 
   return (
     <>
+      {successMessage && <p>{successMessage}</p>}
       <p className="modalHeader">Submit your Project</p>
       <form action="" className="modalFormContainer" onSubmit={handleSubmit}>
         <label htmlFor="modalLinkContainer" className="modalLinkLabel">
@@ -116,6 +135,7 @@ const SubmitProject = () => {
           type="submit"
           value="Submit Project"
           className="modalSubmitButton"
+          disabled={!isVideoUploaded}
         />
       </form>
     </>
