@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './login.css';
 import axios from 'axios';
-import Popup from '../popup/Popup'; // Import the Popup component
+import Popup from '../popup/Popup';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ switchToRegister, onClose, updateLoginState }) => {
@@ -12,33 +12,12 @@ const Login = ({ switchToRegister, onClose, updateLoginState }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
   const navigate = useNavigate()
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true); // Start loading state
-  //   setError(''); // Reset error state
 
-  //   try {
-  //     const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/User/login', {
-  //       email: email,
-  //       password: password,
-  //     });
-
-  //     if (response.status === 200) {
-  //       setPopupMessage('Login Successful!');
-  //       setShowPopup(true);
-  //       localStorage.setItem("token", response.data.token)
-  //       setTimeout(() => {
-  //         onClose();
-  //       }, 2000); // Delay to show the success message
-  //     }
-  //   } catch (error) {
-  //     setPopupMessage('Invalid credentials, please try again!');
-  //     setShowPopup(true);
-  //   } finally {
-  //     setLoading(false); // Stop loading state
-  //   }
-  // };
-
+  function getFirstName(fullName) {
+    const nameParts = fullName.split(' '); // Split the name by spaces
+    console.log(nameParts)
+    return nameParts[0]; // Return the first part (first name)
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,8 +33,7 @@ const Login = ({ switchToRegister, onClose, updateLoginState }) => {
       if (response.status == 200) {
         setPopupMessage('Login Successful!');
         setShowPopup(true);
-        
-        // Save the token to localStorage
+
         localStorage.setItem('token', response.data.token);
         const token = localStorage.getItem('token')
         
@@ -66,16 +44,12 @@ const Login = ({ switchToRegister, onClose, updateLoginState }) => {
                 Authorization: `Bearer ${token}`,
               },
             });
-            const userName = response.data.user.name; // Get the user's name
-            // setUserInfo(response.data.user.name); // Set user info from the API
-            // setIsLoggedIn(true); // User is logged in
+            const userName = getFirstName(response.data.user.name);
             updateLoginState(userName);
           } catch (error) {
             console.error('Error fetching user info', error);
           }
         }
-
-        // Update HomePage's state
 
         setTimeout(() => {
           onClose();
@@ -122,10 +96,8 @@ const Login = ({ switchToRegister, onClose, updateLoginState }) => {
           {loading ? 'Logging in...' : 'Log in'}
         </button>
 
-        {error && <p className="errorMessage">{error}</p>} {/* Display error message */}
+        {error && <p className="errorMessage">{error}</p>}
       </form>
-
-      {/* Show the popup for success or error */}
       {showPopup && <Popup message={popupMessage} />}
     </>
   );

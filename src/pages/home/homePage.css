@@ -287,3 +287,7 @@
 .bottomRow .thirdCardContainerTopCard h1 {
     color: #e9766f;
 }
+
+.logout{
+    color: rgb(251, 66, 66);
+}
