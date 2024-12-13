@@ -53,6 +53,14 @@ const HomePage = () => {
     setIsLoading(false); // Set loading to false after API call
   };
 
+  const handleLogout = () => {
+    // Clear localStorage and reset state
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    setUserInfo(null);
+  };
+
+
   useEffect(() => {
     fetchUserInfo(); // Check if the user is logged in when the page loads
   }, []);
@@ -117,7 +125,10 @@ const HomePage = () => {
                       <p onClick={() => openModal('login')}>Login</p>
                     </>
                   ) : (
-                    <p>Hello, {userInfo}</p> // Display user's name after login
+                    <>
+                    <p>Hello, {userInfo}</p> 
+                    <p onClick={handleLogout}>Logout</p>
+                    </>
                   )}
                   <p
                     onClick={() => isLoggedIn && openModal('submitProject')}
