@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './otpVerification.css';
 import axios from 'axios';
 
-const OtpVerification = ({ switchToHome, formData, setFormData }) => {
+const OtpVerification = ({ formData, setFormData, onClose }) => {
     const [otp, setOtp] = useState(['', '', '', '']); // Use an array to hold the OTP characters
     const [error, setError] = useState(''); // State to handle error messages
 
@@ -50,18 +50,33 @@ const OtpVerification = ({ switchToHome, formData, setFormData }) => {
             // Post OTP verification and registration
             const response = await axios.post(
                 'https://backend-newton-capstone-eval.onrender.com/User/register-otp',
-                { otp: Number(otpString), ...formData }
+                { otp: Number(otpString), ...formData } // Include form data
             );
             if (response.status === 200) {
                 console.log('User registered successfully');
-                localStorage.setItem("token", response.token)
-                switchToHome(); // Redirect to home page
+                localStorage.setItem("token", response.data.token); // Store token
+                onClose(); // Redirect to home page
+                
             }
         } catch (error) {
             console.error('Error verifying OTP:', error);
-            setError('Invalid OTP. Please try again.'); // Set error for invalid OTP
+            setError(error.response.data.message); // Set error for invalid OTP
         }
     };
+
+    const resendOtp = async () => {
+        try {
+            const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/sendMail/otp', { to: formData.email });
+            if (response.status === 200) {
+                console.log('OTP resent successfully');
+                alert('OTP resent to your email.');
+            }
+        } catch (error) {
+            console.error('Error resending OTP:', error);
+            alert('Failed to resend OTP. Please try again later.');
+        }
+    };
+
 
     return (
         <>
@@ -92,10 +107,11 @@ const OtpVerification = ({ switchToHome, formData, setFormData }) => {
             </form>
             <p className="modalSubHeader">
                 Didn't receive OTP?{' '}
-                <a href="#" className="modalSubHeaderLink">
+                <a href="#" onClick={(e) => { e.preventDefault(); resendOtp(); }} className="modalSubHeaderLink">
                     Click here to resend
                 </a>
             </p>
+
         </>
     );
 };

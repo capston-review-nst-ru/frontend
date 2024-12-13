@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './GetStarted.css';
 import axios from 'axios';
 
-const GetStarted = ({ switchToLogin, switchToOtp,formData,setFormData }) => {
+const GetStarted = ({ switchToLogin, switchToOtp,formData,setFormData, onClose }) => {
   const mentors = ["Vishal Sharma", "Rishabh Sharma", "Rashmi Kumari", "Jai Gupta", "Swati Priya", "Shivam Gupta", "Narendra Kumar", "Aryan Singhal", "Rahul Kumar", "Nischal Gupta", "Ajay", "Kartik Katiyar", "Neeraj Rawat", "Uttam Kumar Mahato"];
   
   const [loading, setLoading] = useState(false);
@@ -11,22 +11,41 @@ const GetStarted = ({ switchToLogin, switchToOtp,formData,setFormData }) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true); // Show loader
+//     try {
+//       // Send OTP request
+//       const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/sendMail/otp', { to: formData.email });
+//       if (response.status === 200) {
+//         console.log('OTP sent successfully');
+//         switchToOtp(); // Redirect to OTP verification modal
+//       }
+//     } catch (error) {
+//       console.error('Error sending OTP:', error);
+//     } finally {
+//       setLoading(false); // Hide loader
+//     }
+//   };
+
+const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true); // Show loader
     try {
       // Send OTP request
       const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/sendMail/otp', { to: formData.email });
       if (response.status === 200) {
-        console.log('OTP sent successfully');
+        console.log('OTP sent successfully to', formData.email);
         switchToOtp(); // Redirect to OTP verification modal
       }
     } catch (error) {
       console.error('Error sending OTP:', error);
+      alert('Failed to send OTP. Please check your email address and try again.');
     } finally {
       setLoading(false); // Hide loader
     }
   };
+  
 
   return (
     <>

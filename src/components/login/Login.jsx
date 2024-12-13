@@ -2,50 +2,97 @@ import React, { useState } from 'react';
 import './login.css';
 import axios from 'axios';
 import Popup from '../popup/Popup'; // Import the Popup component
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ switchToRegister, onClose }) => {
+const Login = ({ switchToRegister, onClose, updateLoginState }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+  const navigate = useNavigate()
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true); // Start loading state
+  //   setError(''); // Reset error state
+
+  //   try {
+  //     const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/User/login', {
+  //       email: email,
+  //       password: password,
+  //     });
+
+  //     if (response.status === 200) {
+  //       setPopupMessage('Login Successful!');
+  //       setShowPopup(true);
+  //       localStorage.setItem("token", response.data.token)
+  //       setTimeout(() => {
+  //         onClose();
+  //       }, 2000); // Delay to show the success message
+  //     }
+  //   } catch (error) {
+  //     setPopupMessage('Invalid credentials, please try again!');
+  //     setShowPopup(true);
+  //   } finally {
+  //     setLoading(false); // Stop loading state
+  //   }
+  // };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading state
-    setError(''); // Reset error state
+    setLoading(true);
+    setError('');
 
     try {
       const response = await axios.post('https://backend-newton-capstone-eval.onrender.com/User/login', {
-        email: email,
-        password: password,
+        email,
+        password,
       });
 
-      if (response.status === 200) {
-        // Show success message
+      if (response.status == 200) {
         setPopupMessage('Login Successful!');
         setShowPopup(true);
+        
+        // Save the token to localStorage
+        localStorage.setItem('token', response.data.token);
+        const token = localStorage.getItem('token')
+        
+        if (token) {
+          try {
+            const response = await axios.get('https://backend-newton-capstone-eval.onrender.com/User/me', {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            const userName = response.data.user.name; // Get the user's name
+            // setUserInfo(response.data.user.name); // Set user info from the API
+            // setIsLoggedIn(true); // User is logged in
+            updateLoginState(userName);
+          } catch (error) {
+            console.error('Error fetching user info', error);
+          }
+        }
 
-        // Close the modal and redirect to homepage after a short delay
+        // Update HomePage's state
+
         setTimeout(() => {
-          onClose(); // Close the modal
-          window.location.href = '/'; // Redirect to homepage
-        }, 2000); // Delay to show the success message
+          onClose();
+        }, 2000);
       }
     } catch (error) {
       setPopupMessage('Invalid credentials, please try again!');
       setShowPopup(true);
     } finally {
-      setLoading(false); // Stop loading state
+      setLoading(false);
     }
   };
-
   return (
     <>
       <p className="modalHeader">Welcome Back</p>
       <p className="modalSubHeader">
-        Don't have an account? 
+        Don't have an account?
         <a href="#" onClick={(e) => { e.preventDefault(); switchToRegister(); }} className="modalSubHeaderLink">
           Register
         </a>
@@ -70,7 +117,7 @@ const Login = ({ switchToRegister, onClose }) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-       
+
         <button type="submit" className="modalSubmitButton" disabled={loading}>
           {loading ? 'Logging in...' : 'Log in'}
         </button>

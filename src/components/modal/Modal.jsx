@@ -6,24 +6,36 @@ import Login from '../login/Login';
 import FeelingStuck from '../feelingStuck/FeelingStuck';
 import SubmitProject from '../submitProject/SubmitProject';
 import OtpVerification from '../otpVerification/OtpVerification';
+import { useNavigate } from 'react-router-dom';
 
-const Modal = ({ content, onClose, setContent }) => {
+const Modal = ({ content, onClose, setContent, setIsLoggedIn, setUserInfo, updateLoginState }) => {
   const mentors = ["Vishal Sharma", "Rishabh Sharma", "Rashmi Kumari", "Jai Gupta", "Swati Priya", "Shivam Gupta", "Narendra Kumar", "Aryan Singhal", "Rahul Kumar", "Nischal Gupta", "Ajay", "Kartik Katiyar", "Neeraj Rawat", "Uttam Kumar Mahato"];
+
+  const navigate = useNavigate()
 
   const [formdata,setformdata] = useState({mentorName: mentors[0]})
   // Render content dynamically based on `content`
   const renderContent = () => {
     switch (content) {
       case 'register':
-        return <GetStarted switchToHome={() => {window.location.href = '/'}}  switchToOtp={()=>setContent('switchOTP')}  setFormData={setformdata} formData={formdata}  switchToLogin={() => setContent('login')} />;
+  return (
+    <GetStarted 
+      switchToOtp={() => setContent('switchOTP')} 
+      setFormData={setformdata} 
+      formData={formdata} 
+      switchToLogin={() => setContent('login')} 
+      onClose={onClose} 
+    />
+  );
+
       case 'login':
-        return <Login switchToRegister={() => setContent('register')} onClose={onClose} />;
+        return <Login switchToRegister={() => setContent('register')} onClose={onClose} updateLoginState={updateLoginState} />;
       case 'submitProject':
         return <SubmitProject />;
       case 'askQuery':
         return <FeelingStuck />;
       case 'switchOTP':
-        return <OtpVerification switchToHome={() => {window.location.href = '/'}} formData={formdata} />;
+        return <OtpVerification onClose={onClose} formData={formdata} />;
 
       default:
         return null;
@@ -32,7 +44,7 @@ const Modal = ({ content, onClose, setContent }) => {
 
   return (
     <div className="modalContainer">
-      <div className="modalOverlay" onClick={onClose}></div>
+      <div className="modalOverlay" onClick={()=>{onClose()}}></div>
       <div className="modal">
         <div className="firstCard">
           <img src={logo} alt="Logo" />
