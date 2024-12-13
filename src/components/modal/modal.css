@@ -15,8 +15,8 @@
     transform: translate(-50%, -50%);
     height: fit-content;
     width: 50vw;
-    background-color: rgba(0, 0, 0, .6);
-
+    background-color: rgba(20, 20, 20, 0.6);
+  border: 1px solid rgba(244, 244, 244, 0.607);
     
     border-radius: 10px;
     padding: 1rem 2rem;
@@ -37,10 +37,18 @@
   }
   
   .closeButton:hover {
-    color: #ff4d4d; /* A light red hover color */
-    transform: scale(1.1); /* Slightly increase size when hovered */
+    color: #ff4d4d;
+    transform: scale(1.1);
   }
   
   .closeButton:focus {
-    outline: none; /* Removes the default focus outline */
+    outline: none;
+  }
+
+  .firstCardModal{
+      height: 100%;
+      width: 25%;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      color: white;
   }

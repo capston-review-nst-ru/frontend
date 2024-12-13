@@ -14,7 +14,6 @@ const Modal = ({ content, onClose, setContent, setIsLoggedIn, setUserInfo, updat
   const navigate = useNavigate()
 
   const [formdata,setformdata] = useState({mentorName: mentors[0]})
-  // Render content dynamically based on `content`
   const renderContent = () => {
     switch (content) {
       case 'register':
@@ -46,7 +45,7 @@ const Modal = ({ content, onClose, setContent, setIsLoggedIn, setUserInfo, updat
     <div className="modalContainer">
       <div className="modalOverlay" onClick={()=>{onClose()}}></div>
       <div className="modal">
-        <div className="firstCard">
+        <div className="firstCardModal">
           <img src={logo} alt="Logo" />
           <button onClick={onClose} className="closeButton">&times;</button>
         </div>
