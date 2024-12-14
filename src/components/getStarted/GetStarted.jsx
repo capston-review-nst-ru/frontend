@@ -125,18 +125,6 @@ const GetStarted = ({
           ))}
         </select>
 
-        <label htmlFor="figmaLink" className="modalLinkLabel">
-          Figma Link
-        </label>
-        <input
-          type="url"
-          id="figmaLink"
-          className="modalLinkContainer"
-          value={formData?.figmaLink}
-          onChange={handleChange}
-          required
-        />
-
         <button type="submit" className="modalSubmitButton" disabled={loading}>
           {loading ? "Sending..." : "Send OTP"}
         </button>
