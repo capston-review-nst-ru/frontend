@@ -67,7 +67,9 @@ const FeelingStuck = () => {
 
   return (
     <>
-      {successMessage && <h1>{successMessage}</h1>}
+      {successMessage ?  (<h1>{successMessage}</h1>)
+       : 
+       (<>
       <p className="modalHeader">Feeling Stuck</p>
       <p className="modalSubHeader">
         Don't hesitate! Take help from your mentor
@@ -102,6 +104,7 @@ const FeelingStuck = () => {
           disabled={isSubmitted}
         />
       </form>
+      </>)}
     </>
   );
 };

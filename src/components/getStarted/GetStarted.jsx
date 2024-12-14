@@ -3,7 +3,7 @@ import './GetStarted.css';
 import axios from 'axios';
 
 const GetStarted = ({ switchToLogin, switchToOtp,formData,setFormData, onClose }) => {
-  const mentors = ["Vishal Sharma", "Rishabh Sharma", "Rashmi Kumari", "Jai Gupta", "Swati Priya", "Shivam Gupta", "Narendra Kumar", "Aryan Singhal", "Rahul Kumar", "Nischal Gupta", "Ajay", "Kartik Katiyar", "Neeraj Rawat", "Uttam Kumar Mahato"];
+  const mentors = ["Vishal Sharma", "Rishabh Sharma", "Rashmi Kumari", "Jai Gupta", "Swati Priya", "Shivam Gupta", "Narendra Kumar", "Aryan Singhal", "Rahul Kumar", "Nishchal Gupta", "Ajay", "Kartik Katiyar", "Neeraj Rawat", "Uttam Kumar Mahato"];
   
   const [loading, setLoading] = useState(false);
 
