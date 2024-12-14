@@ -110,6 +110,7 @@ const SubmitProject = () => {
         <label htmlFor="modalFileContainer" className="modalFileLabel">
           Video Explanation
         </label>
+        
         <input
           type="file"
           id="modalFileContainer"
@@ -119,7 +120,7 @@ const SubmitProject = () => {
           onChange={handleVideoFileChange}
           accept="video/*"
         />
-
+       
         <label htmlFor="modalQueryContainer" className="modalQueryLabel">
           Ask your queries (Optional)
         </label>

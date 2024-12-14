@@ -19,7 +19,7 @@ const GetStarted = ({
     "Narendra Kumar",
     "Aryan Singhal",
     "Rahul Kumar",
-    "Nischal Gupta",
+    "Nishchal Gupta",
     "Ajay",
     "Kartik Katiyar",
     "Neeraj Rawat",
