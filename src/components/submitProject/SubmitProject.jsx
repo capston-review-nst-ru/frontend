@@ -78,7 +78,7 @@ const SubmitProject = () => {
 
   return (
     <>
-      {successMessage && <p>{successMessage}</p>}
+      {successMessage && <h1>{successMessage}</h1>}
       <p className="modalHeader">Submit your Project</p>
       <form action="" className="modalFormContainer" onSubmit={handleSubmit}>
         <label htmlFor="modalLinkContainer" className="modalLinkLabel">

@@ -5,6 +5,8 @@ import axios from "axios";
 const FeelingStuck = () => {
   const [text, setText] = useState("");
   const [fileLink, setFileLink] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleTextChange = (e) => {
     setText(e.target.value);
@@ -32,8 +34,8 @@ const FeelingStuck = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!fileLink) {
-      alert("Please upload a file!");
+    if (!fileLink && !text) {
+      alert("Please enter a query or upload a file!");
       return;
     }
 
@@ -41,7 +43,7 @@ const FeelingStuck = () => {
       const response = await axios.post(
         "https://backend-newton-capstone-eval.onrender.com/AskQuery/queries",
         {
-          query: { query: text, file: fileLink },
+          query: { query: text, file: fileLink || null },
         },
         {
           headers: {
@@ -50,6 +52,13 @@ const FeelingStuck = () => {
           },
         }
       );
+      if (response.data) {
+        setSuccessMessage("Query submitted successfully!");
+        setIsSubmitted(true);
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+      }
       console.log("Query submitted successfully:", response.data);
     } catch (error) {
       console.error("Error submitting query:", error);
@@ -58,6 +67,7 @@ const FeelingStuck = () => {
 
   return (
     <>
+      {successMessage && <h1>{successMessage}</h1>}
       <p className="modalHeader">Feeling Stuck</p>
       <p className="modalSubHeader">
         Don't hesitate! Take help from your mentor
@@ -82,7 +92,6 @@ const FeelingStuck = () => {
           type="file"
           id="modalFileContainer"
           className="modalFileContainer"
-          required
           onChange={handleFileChange}
         />
 
@@ -90,6 +99,7 @@ const FeelingStuck = () => {
           type="submit"
           value="Submit Query"
           className="modalSubmitButton"
+          disabled={isSubmitted}
         />
       </form>
     </>
