@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./GetStarted.css";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const GetStarted = ({
   switchToLogin,
@@ -41,10 +42,17 @@ const GetStarted = ({
         "https://backend-newton-capstone-eval.onrender.com/sendMail/otp",
         { to: formData.email }
       );
-      if (response.status === 200) {
-        console.log("OTP sent successfully to", formData.email);
+      if (response.data.success) {
+        // console.log("OTP resent successfully");
+        toast.success("OTP sent to " + formData.email);
         switchToOtp();
+      } else {
+        toast.error(response.data.message);
       }
+      // if (response.status === 200) {
+      //   console.log("OTP sent successfully to", formData.email);
+      //   switchToOtp();
+      // }
     } catch (error) {
       console.error("Error sending OTP:", error);
       alert(

@@ -5,6 +5,7 @@ import HomePage from "./pages/home/HomePage";
 import UserOnbord from "./pages/userOnboard/UserOnbord";
 import ProjectOnboard from "./pages/projectOnboard/ProjectOnboard";
 import { ToastContainer } from "react-toastify";
+import { ConfirmProvider } from "material-ui-confirm";
 
 function App() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -39,13 +40,15 @@ function App() {
           <button onClick={() => window.location.reload()}>Retry</button>
         </div>
       ) : (
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/user-onboard" element={<UserOnbord />} />
-            <Route path="/project-submission" element={<ProjectOnboard />} />
-          </Routes>
-        </BrowserRouter>
+        <ConfirmProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/user-onboard" element={<UserOnbord />} />
+              <Route path="/project-submission" element={<ProjectOnboard />} />
+            </Routes>
+          </BrowserRouter>
+        </ConfirmProvider>
       )}
     </>
   );

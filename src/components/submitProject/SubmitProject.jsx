@@ -3,14 +3,14 @@ import "./submitProject.css";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const SubmitProject = () => {
-  const [isVideoUploaded, setIsVideoUploaded] = useState(false);
+const SubmitProject = ({ onClose, fetchUserInfo }) => {
+  const [IsVideoUploading, setIsVideoUploading] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
   const [formDataInputs, setformDataInputs] = useState({
     githubUrl: "",
     hostedLink: "",
-    videoFile: "exampple.com",
+    videoFile: "",
     query: "",
   });
 
@@ -20,8 +20,9 @@ const SubmitProject = () => {
       formData.append("video", e.target.files[0]);
       // console.log(e.target.files[0]);
       // var loading = toast.loading("Uploading Video..");
+      setIsVideoUploading("Uploading Video...");
       var axres = await axios.post(
-        "https://backend-newton-capstone-eval.onrender.com/UploadFile/upload",
+        "https://backend-newton-capstone-eval.onrender.com/UploadFileS3/uploadS3",
         formData
       );
       // toast.update(loading, {
@@ -35,8 +36,9 @@ const SubmitProject = () => {
         videoFile: axres.data.videoLink,
       }));
       if (axres.data) {
-        setIsVideoUploaded(true);
+        setIsVideoUploading("");
       }
+      setIsVideoUploading("");
       console.log(axres.data);
     }
   };
@@ -48,12 +50,14 @@ const SubmitProject = () => {
     });
   };
   var tosend = { responseSheet: formDataInputs };
+  // console.log(formDataInputs);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!localStorage.getItem("token")) {
       alert("Please login first");
       return;
     }
+    setIsVideoUploading("Submitting...");
     const response = await fetch(
       "https://backend-newton-capstone-eval.onrender.com/Submission/submissions",
       {
@@ -66,14 +70,17 @@ const SubmitProject = () => {
       }
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
 
-    if (response.ok) {
-      setSuccessMessage("Submitted successfully!");
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 2000);
+    if (data.status) {
+      // setSuccessMessage("Submitted successfully!");
+      fetchUserInfo();
+      onClose();
+      toast.success(data.message);
+    } else {
+      toast.error(data.message);
     }
+    setIsVideoUploading("");
   };
 
   return (
@@ -106,11 +113,24 @@ const SubmitProject = () => {
           className="modalHostedLinkContainer"
           onChange={handleChange}
         />
+        <label
+          htmlFor="modalHostedLinkContainer"
+          className="modalHostedLinkLabel"
+        >
+          Figma Link
+        </label>
+        <input
+          type="url"
+          id="modalHostedLinkContainer"
+          name="figmaLink"
+          className="modalHostedLinkContainer"
+          onChange={handleChange}
+        />
 
         <label htmlFor="modalFileContainer" className="modalFileLabel">
           Video Explanation
         </label>
-        
+
         <input
           type="file"
           id="modalFileContainer"
@@ -120,7 +140,7 @@ const SubmitProject = () => {
           onChange={handleVideoFileChange}
           accept="video/*"
         />
-       
+
         <label htmlFor="modalQueryContainer" className="modalQueryLabel">
           Ask your queries (Optional)
         </label>
@@ -134,9 +154,9 @@ const SubmitProject = () => {
 
         <input
           type="submit"
-          value="Submit Project"
-          className="modalSubmitButton"
-          disabled={!isVideoUploaded}
+          value={IsVideoUploading || "Submit Project"}
+          className={`modalSubmitButton`}
+          disabled={IsVideoUploading}
         />
       </form>
     </>

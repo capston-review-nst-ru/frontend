@@ -6,9 +6,11 @@ import Frame from "../../images/Frame.svg";
 import Group from "../../images/Group.svg";
 import github from "../../images/github.svg";
 import Modal from "../../components/modal/Modal";
-import axios from "axios";
+import axios, { all } from "axios";
+import { useConfirm } from "material-ui-confirm";
 
 const HomePage = () => {
+  const confirm = useConfirm();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [countdown, setCountdown] = useState("");
@@ -19,7 +21,7 @@ const HomePage = () => {
   const [projects, setProjectCount] = useState(0);
   const [performers, setPerformerCount] = useState(0);
   const [querySolved, setQuerySolvedCount] = useState(0);
-
+  const [allUserInfo, setallUserInfo] = useState({});
   const updateLoginState = (userName) => {
     setUserInfo(userName);
     setIsLoggedIn(true);
@@ -48,13 +50,16 @@ const HomePage = () => {
       try {
         const response = await axios.get(
           "https://backend-newton-capstone-eval.onrender.com/User/me",
+          // "https://backend-newton-capstone-eval.onrender.com/User/me",
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        console.log(response.data.user.name);
+        // console.log(response.data.user.name);
+        setallUserInfo(response.data.user);
+        // console.log(response.data.user);
         setUserInfo(getFirstName(response.data.user.name)); // Set user info from the API
         setIsLoggedIn(true); // User is logged in
       } catch (error) {
@@ -66,10 +71,17 @@ const HomePage = () => {
   };
 
   const handleLogout = () => {
+    confirm({
+      description: `Are you sure, You want to logout.`,
+      confirmationText: "Logout",
+    })
+      .then(() => {
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+        setUserInfo(null);
+      })
+      .catch(() => {});
     // Clear localStorage and reset state
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setUserInfo(null);
   };
 
   useEffect(() => {
@@ -93,13 +105,13 @@ const HomePage = () => {
         );
         setQueryCount(queryCount.data.count);
         setProjectCount(projectsCount.data.count);
-        setPerformerCount(performersCount.data.count);
+        setPerformerCount(performersCount.data.topPerformers);
         setQuerySolvedCount(querySolvedCount.data.count);
       })();
     } catch (error) {
       console.log(error);
     }
-  });
+  }, []);
   useEffect(() => {
     const targetDate = new Date("2024-12-20T23:00:00"); // Target date and time (13th Dec 2024, 6:00 PM)
 
@@ -144,6 +156,7 @@ const HomePage = () => {
           setIsLoggedIn={setIsLoggedIn}
           setUserInfo={setUserInfo}
           updateLoginState={updateLoginState}
+          fetchUserInfo={fetchUserInfo}
         />
       )}
 
@@ -172,7 +185,13 @@ const HomePage = () => {
                   )}
                   <p
                     onClick={() => isLoggedIn && openModal("submitProject")}
-                    className={!isLoggedIn ? "disabled" : ""}
+                    className={
+                      !isLoggedIn
+                        ? "disabled"
+                        : allUserInfo.Projects && allUserInfo.Projects[0]
+                        ? "disabled"
+                        : ""
+                    }
                   >
                     Submit Project
                   </p>
@@ -226,12 +245,56 @@ const HomePage = () => {
                   </div>
                 </div>
                 <div className="secondCard">
-                  <div className="upper">
+                  <div className="upper" style={{ height: "5rem" }}>
                     <img src={Group} alt="" />
                     <div className="text">
                       <p>Top Projects</p>
                       <span>NST Capstone Showcase</span>
                     </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "1rem",
+                      marginBottom: "0.5rem",
+                    }}
+                  >
+                    {performers
+                      ? performers?.map((el) => (
+                          <div
+                            className="TopProjectItem"
+                            style={{
+                              marginLeft: "1.5rem",
+                              width: "10rem",
+                              // height: "3rem",
+                              background: "rgba(0,0,0,0.5)",
+                              borderRadius: "10px",
+                              color: "white",
+                              padding: "1rem",
+                              display: "flex",
+                              gap: "1rem",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                            onClick={() => {
+                              window.open(el.githubRepo);
+                            }}
+                          >
+                            <p style={{ fontSize: "0.8rem" }}>
+                              {el.name[0].toUpperCase() + el.name.substr(1)}
+                            </p>
+                            <img
+                              style={{
+                                opacity: 0.8,
+                                height: "2rem",
+                                filter: "invert",
+                              }}
+                              src="/github.png"
+                              alt=""
+                            />
+                          </div>
+                        ))
+                      : ""}
                   </div>
                   <div className="lower">
                     <img src={Frame} alt="" />
