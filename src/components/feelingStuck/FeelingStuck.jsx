@@ -26,7 +26,7 @@ const FeelingStuck = ({ onClose }) => {
       formData.append("video", selectedFile);
       setsubmitLodingText("Uploading File...");
       var axres = await axios.post(
-        "https://backend-newton-capstone-eval.onrender.com/UploadFileS3/uploadS3",
+        "https://backend-newton-capstone-eval.onrender.com/UploadFile/upload",
         formData
       );
       var filelink = axres.data.videoLink;

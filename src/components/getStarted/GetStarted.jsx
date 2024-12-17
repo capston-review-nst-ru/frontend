@@ -12,19 +12,19 @@ const GetStarted = ({
 }) => {
   const mentors = [
     "Vishal Sharma",
-    "Rishabh Sharma",
-    "Rashmi Kumari",
-    "Jai Gupta",
-    "Swati Priya",
-    "Shivam Gupta",
-    "Narendra Kumar",
+    "Ajay Sharma",
     "Aryan Singhal",
-    "Rahul Kumar",
-    "Nishchal Gupta",
-    "Ajay",
+    "Jai Gupta",
     "Kartik Katiyar",
+    "Narendra Kumar",
     "Neeraj Rawat",
-    "Uttam Kumar Mahato",
+    "Nishchal Gupta",
+    "Rahul Kumar",
+    "Rashmi Kumari",
+    "Rishabh Sharma",
+    "Shivam Gupta",
+    "Swati Priya",
+    "Uttam Kumar Mahatto",
   ];
 
   const [loading, setLoading] = useState(false);
@@ -113,6 +113,7 @@ const GetStarted = ({
           className="modalPasswordContainer"
           value={formData?.password || ""}
           onChange={handleChange}
+          minLength={6}
           required
         />
 

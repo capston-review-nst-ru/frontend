@@ -27,8 +27,12 @@ const OtpVerification = ({
       if (value && idx < 3) {
         const nextInput = document.getElementById(`otp-${idx + 1}`);
         if (nextInput) nextInput.focus();
+      } else if (!value && idx > 0) {
+        const prevInput = document.getElementById(`otp-${idx - 1}`);
+        if (prevInput) prevInput.focus();
       }
     }
+
     setError("");
   };
 

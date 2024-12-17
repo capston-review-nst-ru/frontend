@@ -22,7 +22,7 @@ const SubmitProject = ({ onClose, fetchUserInfo }) => {
       // var loading = toast.loading("Uploading Video..");
       setIsVideoUploading("Uploading Video...");
       var axres = await axios.post(
-        "https://backend-newton-capstone-eval.onrender.com/UploadFileS3/uploadS3",
+        "https://backend-newton-capstone-eval.onrender.com/UploadFile/upload",
         formData
       );
       // toast.update(loading, {
