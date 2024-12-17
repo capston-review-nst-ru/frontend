@@ -169,7 +169,11 @@ const HomePage = () => {
             <div className="cardContainer">
               <div className="topRow">
                 <div className="firstCard">
-                  <img src={logo} alt="" />
+                  <img
+                    src={"/Capstone_logo.svg"}
+                    style={{ width: "3rem" }}
+                    alt=""
+                  />
                   {!isLoggedIn ? (
                     <>
                       <p onClick={() => openModal("register")}>Register</p>
@@ -260,26 +264,75 @@ const HomePage = () => {
                     }}
                   >
                     {performers
-                      ? performers?.map((el) => (
+                      ? performers?.map((el, index) => (
                           <div
                             className="TopProjectItem"
                             style={{
+                              position: "relative", // Position relative for pseudo-element
                               marginLeft: "1.5rem",
                               width: "10rem",
-                              // height: "3rem",
-                              background: "rgba(0,0,0,0.5)",
-                              borderRadius: "10px",
+                              borderRadius: "5px", // Increased border radius for rounded effect
                               color: "white",
                               padding: "1rem",
                               display: "flex",
                               gap: "1rem",
                               alignItems: "center",
                               justifyContent: "space-between",
+                              background: "rgba(0,0,0,0.3)",
+                              overflow: "hidden", // Ensure content doesn't spill out
                             }}
                             onClick={() => {
                               window.open(el.githubRepo);
                             }}
                           >
+                            {/* Pseudo-element for border effect */}
+                            <div
+                              style={{
+                                height: "1.2rem",
+                                width: "1.2rem",
+                                position: "absolute",
+                                top: "0px",
+                                left: "0px",
+                                fontSize: "13px",
+                                color: "black",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                borderBottomRightRadius: "5px",
+                                background:
+                                  index === 0
+                                    ? "linear-gradient(135deg, #FFD700, #FFEA00)" // Gold gradient for 1st
+                                    : index === 1
+                                    ? "linear-gradient(135deg, #C0C0C0, #D3D3D3)" // Silver gradient for 2nd
+                                    : index === 2
+                                    ? "linear-gradient(135deg, #cd7f32, #D2B48C)" // Bronze gradient for 3rd
+                                    : "none", // No border for others
+                                fontWeight: "bold",
+                              }}
+                            >
+                              <p>{index + 1}</p>
+                            </div>
+                            <div
+                              style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                borderRadius: "20px", // Match the border radius
+                                // zIndex: -1, // Place behind the content
+
+                                // border: "2px solid transparent", // Transparent border
+                                borderImage:
+                                  index === 0
+                                    ? "linear-gradient(135deg, #FFD700, #FFEA00) 1" // Gold gradient for 1st
+                                    : index === 1
+                                    ? "linear-gradient(135deg, #C0C0C0, #D3D3D3) 1" // Silver gradient for 2nd
+                                    : index === 2
+                                    ? "linear-gradient(135deg, #cd7f32, #D2B48C) 1" // Bronze gradient for 3rd
+                                    : "none", // No border for others
+                              }}
+                            />
                             <p style={{ fontSize: "0.8rem" }}>
                               {el.name[0].toUpperCase() + el.name.substr(1)}
                             </p>

@@ -88,7 +88,11 @@ const Modal = ({
       ></div>
       <div className="modal">
         <div className="firstCardModal">
-          <img src={logo} alt="Logo" />
+          <img
+            src={"/Capstone_logo.svg"}
+            style={{ width: "3rem" }}
+            alt="Logo"
+          />
           <button onClick={onClose} className="closeButton">
             &times;
           </button>
