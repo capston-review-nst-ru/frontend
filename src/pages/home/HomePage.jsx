@@ -209,7 +209,11 @@ const HomePage = () => {
                 <div className="secondCard">
                   <div className="secondCardContainer">
                     <div className="logo-name">
-                      <img src={logo2} alt="" />
+                      <img
+                        src={"/Capstone_logo.svg"}
+                        style={{ width: "2rem" }}
+                        alt=""
+                      />
                       <p>Capstone</p>
                     </div>
                     <p>Submit within</p>
