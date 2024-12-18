@@ -18,19 +18,11 @@ const SubmitProject = ({ onClose, fetchUserInfo }) => {
     if (e.target.files[0]) {
       var formData = new FormData();
       formData.append("video", e.target.files[0]);
-      // console.log(e.target.files[0]);
-      // var loading = toast.loading("Uploading Video..");
       setIsVideoUploading("Uploading Video...");
       var axres = await axios.post(
         "https://backend-newton-capstone-eval.onrender.com/UploadFile/upload",
         formData
       );
-      // toast.update(loading, {
-      //   autoClose: 2000,
-      //   isLoading: false,
-      //   type: "success",
-      //   toastId: loading,
-      // });
       setformDataInputs((prev) => ({
         ...prev,
         videoFile: axres.data.videoLink,
@@ -50,7 +42,6 @@ const SubmitProject = ({ onClose, fetchUserInfo }) => {
     });
   };
   var tosend = { responseSheet: formDataInputs };
-  // console.log(formDataInputs);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!localStorage.getItem("token")) {
@@ -70,10 +61,8 @@ const SubmitProject = ({ onClose, fetchUserInfo }) => {
       }
     );
     const data = await response.json();
-    // console.log(data);
 
     if (data.status) {
-      // setSuccessMessage("Submitted successfully!");
       fetchUserInfo();
       onClose();
       toast.success(data.message);

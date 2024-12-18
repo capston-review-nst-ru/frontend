@@ -15,7 +15,6 @@
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: green;
-  /* background-image: url("../../images/capstone_globe.gif"); */
   background-image: url("../../../public/globe.png");
   background-position: center;
   z-index: 1000;

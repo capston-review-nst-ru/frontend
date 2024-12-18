@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import "./modal.css";
-import logo from "../../images/logo.svg";
 import GetStarted from "../getStarted/GetStarted";
 import Login from "../login/Login";
 import FeelingStuck from "../feelingStuck/FeelingStuck";
 import SubmitProject from "../submitProject/SubmitProject";
 import OtpVerification from "../otpVerification/OtpVerification";
-import { useNavigate } from "react-router-dom";
 
 const Modal = ({
   content,
@@ -33,8 +31,6 @@ const Modal = ({
     "Swati Priya",
     "Uttam Kumar Mahatto",
   ];
-
-  const navigate = useNavigate();
 
   const [formdata, setformdata] = useState({ mentorName: mentors[0] });
   const renderContent = () => {

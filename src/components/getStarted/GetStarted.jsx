@@ -43,22 +43,20 @@ const GetStarted = ({
         { to: formData.email }
       );
       if (response.data.success) {
-        // console.log("OTP resent successfully");
         toast.success("OTP sent to " + formData.email);
         switchToOtp();
-      } else {
+      } 
+      else {
         toast.error(response.data.message);
       }
-      // if (response.status === 200) {
-      //   console.log("OTP sent successfully to", formData.email);
-      //   switchToOtp();
-      // }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error sending OTP:", error);
       alert(
         "Failed to send OTP. Please check your email address and try again."
       );
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };

@@ -58,18 +58,14 @@ const FeelingStuck = ({ onClose }) => {
         }
       );
       if (response.data) {
-        // setSuccessMessage("Query submitted successfully!");
         toast.success("Query submitted successfully!");
         setIsSubmitted(true);
         onClose();
-
-        // setTimeout(() => {
-        //   window.location.href = "/";
-        // }, 2000);
       }
 
       console.log("Query submitted successfully:", response.data);
-    } catch (error) {
+    }
+     catch (error) {
       console.error("Error submitting query:", error);
     }
     setsubmitLodingText("");
@@ -111,7 +107,6 @@ const FeelingStuck = ({ onClose }) => {
             <input
               type="submit"
               value={submitLodingText || "Submit Query"}
-              // disabled={!submitLodingText}
               className="modalSubmitButton"
               disabled={submitLodingText}
             />

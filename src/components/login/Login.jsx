@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './login.css';
 import axios from 'axios';
 import Popup from '../popup/Popup';
-import { useNavigate } from 'react-router-dom';
 
 const Login = ({ switchToRegister, onClose, updateLoginState }) => {
   const [email, setEmail] = useState('');
@@ -11,11 +10,9 @@ const Login = ({ switchToRegister, onClose, updateLoginState }) => {
   const [error, setError] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
-  const navigate = useNavigate()
 
   function getFirstName(fullName) {
     const nameParts = fullName.split(' '); // Split the name by spaces
-    console.log(nameParts)
     return nameParts[0]; // Return the first part (first name)
 }
 
@@ -46,7 +43,8 @@ const Login = ({ switchToRegister, onClose, updateLoginState }) => {
             });
             const userName = getFirstName(response.data.user.name);
             updateLoginState(userName);
-          } catch (error) {
+          } 
+          catch (error) {
             console.error('Error fetching user info', error);
           }
         }
@@ -55,10 +53,12 @@ const Login = ({ switchToRegister, onClose, updateLoginState }) => {
           onClose();
         }, 2000);
       }
-    } catch (error) {
+    } 
+    catch (error) {
       setPopupMessage('Invalid credentials, please try again!');
       setShowPopup(true);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };

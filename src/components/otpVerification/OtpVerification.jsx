@@ -68,7 +68,6 @@ const OtpVerification = ({
         { otp: Number(otpString), ...formData }
       );
       if (response.data.status) {
-        // console.log("User registered successfully");
         toast.success(response.data.message);
         localStorage.setItem("token", response.data.token);
         const token = localStorage.getItem("token");
@@ -96,7 +95,6 @@ const OtpVerification = ({
     } catch (error) {
       setverifyingOTP(false);
       console.error("Error verifying OTP:", error);
-      //   toast.error(response.data.response);
       setError(error.response.data.message);
     }
   };
@@ -108,7 +106,6 @@ const OtpVerification = ({
         { to: formData.email }
       );
       if (response.data.status) {
-        // console.log("OTP resent successfully");
         toast.success("OTP resent to your email.");
       } else {
         toast.error(response.data.message);
@@ -116,7 +113,6 @@ const OtpVerification = ({
     } catch (error) {
       console.error("Error resending OTP:", error);
       console.log(error.response);
-      //   toast.error()
     }
   };
 

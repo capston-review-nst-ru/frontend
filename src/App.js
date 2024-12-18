@@ -2,9 +2,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import HomePage from "./pages/home/HomePage";
-import UserOnbord from "./pages/userOnboard/UserOnbord";
 import ProjectOnboard from "./pages/projectOnboard/ProjectOnboard";
-import { ToastContainer } from "react-toastify";
 import { ConfirmProvider } from "material-ui-confirm";
 
 function App() {
@@ -44,7 +42,6 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/user-onboard" element={<UserOnbord />} />
               <Route path="/project-submission" element={<ProjectOnboard />} />
             </Routes>
           </BrowserRouter>

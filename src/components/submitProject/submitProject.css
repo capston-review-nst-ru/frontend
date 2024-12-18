@@ -11,7 +11,7 @@
 }
 
 .modalSubHeader a{
-    color: #A589F1;
+    color: #a589f1;
     padding-left: 0.5em;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .modalFormContainer .modalSubmitButton{
-    background-color: #6C3EDA;
+    background-color: #6c3eda;
     border: none;
     width: 50%;
     margin: 0 auto;
@@ -45,7 +45,7 @@
 }
 
 .modalSubmitButton:disabled {
-    background-color: #A589F1;
+    background-color: #a589f1;
     cursor: not-allowed;
     opacity: 0.5;
     border: none;

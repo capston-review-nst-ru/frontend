@@ -1,7 +1,5 @@
 import React, { useState, useEffect, use } from "react";
 import "./homePage.css";
-import logo from "../../images/logo.svg";
-import logo2 from "../../images/logo 2.svg";
 import Frame from "../../images/Frame.svg";
 import Group from "../../images/Group.svg";
 import github from "../../images/github.svg";
@@ -57,9 +55,7 @@ const HomePage = () => {
             },
           }
         );
-        // console.log(response.data.user.name);
         setallUserInfo(response.data.user);
-        // console.log(response.data.user);
         setUserInfo(getFirstName(response.data.user.name)); // Set user info from the API
         setIsLoggedIn(true); // User is logged in
       } catch (error) {
